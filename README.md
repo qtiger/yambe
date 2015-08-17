@@ -38,7 +38,7 @@ The second part of what YAMBE does is a parser hook. When the page is displayed 
 * Parent Text is the text to display in the breadcrumb for the parent
 
 ##Notes on Stability
-YAMBE works and has been tested and is stable on MediaWiki? 1.13.1, 1.14.0 and 1.15.0 on installations using the traditional wiki URLs and short URLs.
+YAMBE works and has been tested and is stable on MediaWiki? 1.13.1, 1.14.0, 1.15.0 1.24.1 and 1.25.2 on installations using the traditional wiki URLs and short URLs.
 
 If you do encounter any problems please log them in the issues list and I will attempt to address them.
 
