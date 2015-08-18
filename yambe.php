@@ -5,7 +5,7 @@
  *
  * @ingroup Extensions
  * @author Ian Coleman
- * @version 0.2.2
+ * @version 0.2.3
  */
 define('YAMBE_VERSION','0.2.2, 2011-08-29');
  
@@ -122,7 +122,7 @@ if ($data!="")
   }
  
 // Encapsulate the final breadcrumb in its div and send it back to the parser
-return "<div id='yambe'>$breadcrumb</div>\n";
+return "<div id='yambe' class='noprint'>$breadcrumb</div>\n";
 }
  
 // Function to get namespace id from name
