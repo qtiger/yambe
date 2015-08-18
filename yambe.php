@@ -1,7 +1,7 @@
 <?php
 /**
  * Yet Another MediaWiki Breadcrumb Extension (Yambe)
- * For documentation, please see http://shadowfax.org.uk/wiki/YAMBE
+ * For documentation, please see https://github.com/qtiger/yambe/blob/master/README.md
  *
  * @ingroup Extensions
  * @author Ian Coleman
@@ -12,9 +12,9 @@ define('YAMBE_VERSION','0.2.2, 2011-08-29');
 //Extension credits that show up on Special:Version
 $wgExtensionCredits['parserhook'][] = array(
  'name' => 'YAMBE Hierarchical Breadcrumb',
- 'url' => 'http://shadowfax.org.uk/wiki/YAMBE_Code',
+ 'url' => 'https://github.com/qtiger/yambe',
  'version' => YAMBE_VERSION,
- 'author' => '[http://shadowfax.org.uk/wiki Ian Coleman]',
+ 'author' => 'Ian Coleman',
  'description' => 'Parser hook to show Breadcumb on MediaWiki.'
 );
  
