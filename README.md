@@ -1,14 +1,14 @@
 # yambe
 A hierarchical breadcrumb extension for MediaWiki
 
-##Yet Another MediaWiki? Breadcrumb Extension
+##Yet Another MediaWiki Breadcrumb Extension
 Given there are several breadcrumb extensions, why did I bother creating Yet Another MediaWiki? Breadcrumb Extension (YAMBE)?
 
 * I haven't seen any extensions which work exactly how I want them to.
-* It served as an exercise to help me learn about extending MediaWiki?
+* It served as an exercise to help me learn about extending MediaWiki
 
 ##The YAMBE Approach
-YAMBE is designed to allow a hierarchical breadcrumb where each page has a defined parent. This is not the wiki style and thus is probably not useful for a true wiki. However, where MediaWiki? is being used more as a CMS than a wiki YAMBE comes into its own. Also, because of the way that YAMBE works it should be straightforward to implement YAMBE in parts of a wiki which need it and another breadcrumb approach in parts which do not.
+YAMBE is designed to allow a hierarchical breadcrumb where each page has a defined parent. This is not the wiki style and thus is probably not useful for a true wiki. However, where MediaWiki is being used more as a CMS than a wiki YAMBE comes into its own. Also, because of the way that YAMBE works it should be straightforward to implement YAMBE in parts of a wiki which need it and another breadcrumb approach in parts which do not.
 
 ##How YAMBE Works
 YAMBE does what it does in two parts.
@@ -20,9 +20,9 @@ If you want a breadcrumb, and you create the new page from its parent you don't 
 
 If you don't want a breadcrumb just delete the markup.
 
-By way of example, here is the markup which is at the head of this page
+An example of the tag on a page called Kestrel parented from a page called Birds of Prey
 
-`<yambe:breadcrumb>MediaWiki|MediaWiki</yambe:breadcrumb>`
+`<yambe:breadcrumb self="Lesser Kestrel">Birds_of_prey|Birds of Prey</yambe:breadcrumb>`
 
 The root page of the hierachy can be set up with a blank tag as it has no parent.
 
@@ -38,7 +38,7 @@ The second part of what YAMBE does is a parser hook. When the page is displayed 
 * Parent Text is the text to display in the breadcrumb for the parent
 
 ##Notes on Stability
-YAMBE works and has been tested and is stable on MediaWiki? 1.13.1, 1.14.0, 1.15.0 1.24.1 and 1.25.2 on installations using the traditional wiki URLs and short URLs.
+YAMBE works and has been tested and is stable on MediaWiki 1.13.1, 1.14.0, 1.15.0 1.24.1 and 1.25.2 on installations using the traditional wiki URLs and short URLs.
 
 If you do encounter any problems please log them in the issues list and I will attempt to address them.
 
@@ -82,7 +82,7 @@ Add the following to LocalSettings?.php
 
 `require_once ('extensions/yambe.php');`
 
-Save yambe.php (from the source list above) in MediaWiki? extensions directory and edit the global config declarations to fit your wiki.
+Save yambe.php (from the source list above) in MediaWiki extensions directory and edit the global config declarations to fit your wiki.
 
 To kick things off enter a yambe tag in the root page of your hierarchy. Because this is the root page it has no parent so the data element of the tag is blank
 
