@@ -1,5 +1,5 @@
 # yambe
-Automatically exported from code.google.com/p/yambe
+A hierarchical breadcrumb extension for MediaWiki
 
 ##Yet Another MediaWiki? Breadcrumb Extension
 Given there are several breadcrumb extensions, why did I bother creating Yet Another MediaWiki? Breadcrumb Extension (YAMBE)?
