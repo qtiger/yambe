@@ -5,9 +5,9 @@
  *
  * @ingroup Extensions
  * @author Ian Coleman
- * @version 0.2.3
+ * @version 0.2.4
  */
-define('YAMBE_VERSION','0.2.2, 2011-08-29');
+define('YAMBE_VERSION','0.2.4, 2017-06-08');
  
 //Extension credits that show up on Special:Version
 $wgExtensionCredits['parserhook'][] = array(
@@ -29,7 +29,7 @@ $selfLink = false;
 //Set up the hooks
 $wgHooks['EditFormPreloadText'][] = array('yambeSetParent');
  
-// Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as 
+// Avoid unstubbing $parser on setHook() too early on modern (1.12+) MW versions, as 
 // per r35980
 if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
  $wgHooks['ParserFirstCallInit'][] = 'yambeInit';
@@ -37,33 +37,32 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
  $wgExtensionFunctions[] = 'yambeInit';
 }
  
-function yambeInit(){
- global $wgParser;
- $wgParser->setHook ( 'yambe:breadcrumb', 'yambeBreadcrumb' );
+function yambeInit($parser){
+ $parser->setHook ( 'yambe:breadcrumb', 'yambeBreadcrumb' );
  return true;
 }
  
 // Function to build the breadcrumb
-function yambeBreadcrumb ($data, $args)
+function yambeBreadcrumb ($data, $args, $parser)
 {
-global $wgTitle, $wgParser;
 global $bcDelim, $maxCountBack, $overflowPre, $selfLink;
- 
-$wgParser->disableCache();
+
+$parser->disableCache();
+$pgTitle = $parser->getTitle();
  
 // Grab the self argument if it exists
 if (isset($args['self'])) $yambeSelf = $args['self'];
-else $yambeSelf = $wgTitle->getText();
+else $yambeSelf = $pgTitle->getText();
  
 // Breadcrumb is built in reverse and ends with this rather gratuitous self-link
-if ($selfLink) $breadcrumb = linkFromText($wgTitle->getText(),$yambeSelf,$wgTitle->getNamespace());
+if ($selfLink) $breadcrumb = linkFromText($pgTitle->getText(),$yambeSelf,$pgTitle->getNamespace());
 else $breadcrumb = $yambeSelf;
  
-$cur = str_replace(" ", "_", ($wgTitle->getText()));
+$cur = str_replace(" ", "_", ($pgTitle->getText()));
  
 // Store the current link details to prevent circular references
-if ($wgTitle->getNsText() == "Main") $bcList[$cur] = "";
-else $bcList[$cur] = $wgTitle->getNsText();
+if ($pgTitle->getNsText() == "Main") $bcList[$cur] = "";
+else $bcList[$cur] = $pgTitle->getNsText();
  
 if ($data!="")
   {
@@ -227,10 +226,17 @@ function yambeSetParent(&$textbox, &$title)
 {
 global $URLSplit;
  
-$parent = explode($URLSplit,$_SERVER['HTTP_REFERER']);
+if ($URLSplit == "/") {
+  $url = parse_url($_SERVER['HTTP_REFERER']);
+  $parent = substr($url["path"],1);
+}
+else {
+  $arr = explode($URLSplit,$_SERVER['HTTP_REFERER']);
+  $parent = $arr[1];
+}
  
 // If the code breaks on this line check declaration of $URLSplit on line 23 matches your wiki 
-$page = splitName($parent[1]); 
+$page = splitName($parent); 
 $par = getTagFromParent($page['title'],$page['namespaceid']);
  
 if ($par['exists'])
@@ -238,7 +244,7 @@ if ($par['exists'])
   if ($par['self'] != "") $display = $par['self'];
   else $display = str_replace("_", " ", $page['title']);
  
-  $textbox = "<yambe:breadcrumb>$parent[1]|$display</yambe:breadcrumb>";
+  $textbox = "<yambe:breadcrumb>$parent|$display</yambe:breadcrumb>";
   }
  
 return true;
