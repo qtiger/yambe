@@ -5,9 +5,9 @@
  *
  * @ingroup Extensions
  * @author Ian Coleman
- * @version 0.2.4
+ * @version 0.2.5
  */
-define('YAMBE_VERSION','0.2.4, 2017-06-08');
+define('YAMBE_VERSION','0.2.5, 2017-06-08');
  
 //Extension credits that show up on Special:Version
 $wgExtensionCredits['parserhook'][] = array(
@@ -138,13 +138,21 @@ else
 // Function to build a url from text
 function linkFromText($page, $displayText, $nsID=0)
 {
-global $wgUser;
- 
-$skin = $wgUser->getSkin();
+global $wgVersion;
+
 $title = Title::newFromText (trim($page), $nsID);
- 
-if (!is_null($title)) return $skin->makeKnownLinkObj($title, $displayText, "");
-else return "";
+$oldVersion = version_compare( $wgVersion, '1.28', '<=' );
+
+if ( $oldVersion ) {
+  global $wgUser;
+   
+  $skin = $wgUser->getSkin();   
+  if (!is_null($title)) return $skin->makeKnownLinkObj($title, $displayText, "");
+  } else {
+    if (!is_null($title)) return MediaWiki\MediaWikiServices::getInstance()->getLinkRenderer()->makeKnownLink($title, $displayText);
+  }
+
+return "";
 }
  
 function pageExists($page, $nsID=0)
